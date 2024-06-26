@@ -1,6 +1,4 @@
 package com.elife.MiniProject.dao.enums;
-
-
 public enum Privilege {
     READ_PRIVILEGE,
     WRITE_PRIVILEGE,
