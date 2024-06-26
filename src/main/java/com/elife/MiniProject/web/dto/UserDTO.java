@@ -17,7 +17,6 @@ public class UserDTO {
     private String photo;
     private String role;
 
-    // Méthode statique pour convertir une entité User en DTO
     public static UserDTO convertToDTO(User user) {
         return UserDTO.builder()
                 .id(user.getId())
@@ -30,7 +29,6 @@ public class UserDTO {
                 .build();
     }
 
-    // Méthode pour convertir ce DTO en entité User
     public User convertToEntity() {
         User user = new User();
         user.setId(this.id);
@@ -39,7 +37,7 @@ public class UserDTO {
         user.setLastName(this.lastName);
         user.setEmail(this.email);
         user.setPhoto(this.photo);
-        // Assurez-vous de définir d'autres propriétés si nécessaire
+
         return user;
     }
 }
