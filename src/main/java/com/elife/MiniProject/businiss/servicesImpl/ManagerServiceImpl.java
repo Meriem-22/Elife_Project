@@ -60,7 +60,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public Manager findByUsername(String username) {
-        return managerRepository.findByUsername(username);
+        return managerRepository.findByUserName(username);
     }
 
     @Override

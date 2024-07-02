@@ -65,7 +65,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public Administrator findByUsername(String username) {
-        return administratorRepository.findByUsername(username);
+        return administratorRepository.findByUserName(username);
     }
 
     @Override

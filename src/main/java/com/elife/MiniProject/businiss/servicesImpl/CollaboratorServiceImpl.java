@@ -63,7 +63,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
     @Override
     public Collaborator findByUsername(String username) {
-        return collaboratorRepository.findByUsername(username);
+        return collaboratorRepository.findByUserName(username);
     }
 
     @Override
