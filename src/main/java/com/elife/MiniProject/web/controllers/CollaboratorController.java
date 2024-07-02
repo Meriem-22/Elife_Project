@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class CollaboratorController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER') and hasAuthority('READ_PRIVILEGE')")
     public ResponseEntity<CollaboratorDTO> getCollaboratorById(@PathVariable Long id) {
         try {
             Collaborator collaborator = collaboratorService.findById(id);
@@ -37,7 +39,9 @@ public class CollaboratorController {
     }
 
     @PostMapping("/register")
-public ResponseEntity<CollaboratorDTO> registerCollaborator(@RequestBody CollaboratorDTO collaboratorDTO) throws DuplicateUserException {
+    @PreAuthorize("hasAnyRole('COLLABORATOR') and hasAuthority('WRITE_PRIVILEGE')")
+
+    public ResponseEntity<CollaboratorDTO> registerCollaborator(@RequestBody CollaboratorDTO collaboratorDTO) throws DuplicateUserException {
     Collaborator newCollaborator = collaboratorService.register(collaboratorDTO);
     CollaboratorDTO newCollaboratorDTO = CollaboratorDTO.convertToDTO(newCollaborator);
     return ResponseEntity.status(HttpStatus.CREATED).body(newCollaboratorDTO);
@@ -45,6 +49,7 @@ public ResponseEntity<CollaboratorDTO> registerCollaborator(@RequestBody Collabo
 
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('COLLABORATOR')and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<CollaboratorDTO> updateCollaborator(@RequestBody CollaboratorDTO collaboratorDTO, @PathVariable Long id) {
         try {
             Collaborator updatedCollaborator = collaboratorService.update(collaboratorDTO, id);
@@ -56,13 +61,16 @@ public ResponseEntity<CollaboratorDTO> registerCollaborator(@RequestBody Collabo
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN') and hasAuthority('DELETE_PRIVILEGE')")
     public ResponseEntity<Void> deleteCollaborator(@PathVariable Long id) {
         collaboratorService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
+    @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER') and hasAuthority('READ_PRIVILEGE')")
     public List<Collaborator> getAllCollaborators() {
         return collaboratorService.getAllCollaborators();
     }
 }
+

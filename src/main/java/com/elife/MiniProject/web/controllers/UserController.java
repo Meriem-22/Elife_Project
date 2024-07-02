@@ -30,15 +30,5 @@ public class UserController {
         return ResponseEntity.ok(userDTOs);
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
-        UserDTO savedUserDTO = UserDTO.convertToDTO(userService.saveUser(userDTO.convertToEntity()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUserDTO);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
-    }
+    
 }

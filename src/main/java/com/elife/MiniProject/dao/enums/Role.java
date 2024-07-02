@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public enum Role {
     ADMIN(Set.of(Privilege.READ_PRIVILEGE, Privilege.WRITE_PRIVILEGE, Privilege.UPDATE_PRIVILEGE, Privilege.DELETE_PRIVILEGE)),
     MANAGER(Set.of(Privilege.READ_PRIVILEGE, Privilege.WRITE_PRIVILEGE, Privilege.UPDATE_PRIVILEGE)),
-    COLLABORATOR(Set.of(Privilege.READ_PRIVILEGE));
+    COLLABORATOR(Set.of(Privilege.READ_PRIVILEGE, Privilege.WRITE_PRIVILEGE, Privilege.UPDATE_PRIVILEGE));
 
     private final Set<Privilege> privileges;
 

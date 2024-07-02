@@ -8,6 +8,7 @@ import com.elife.MiniProject.web.dto.TrainingDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class TrainingController {
     private CategoryService categoryService;
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER','COLLABORATOR')")
     public ResponseEntity<TrainingDTO> getTrainingById(@PathVariable Long id) {
         Training training = trainingService.getTrainingById(id);
         if (training != null) {
@@ -34,6 +36,7 @@ public class TrainingController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER','COLLABORATOR') and hasAuthority('WRITE_PRIVILEGE')")
     public ResponseEntity<List<TrainingDTO>> getAllTrainings() {
         List<TrainingDTO> trainings = trainingService.getAllTrainings().stream()
                 .map(TrainingDTO::convertToDTO)
@@ -42,6 +45,7 @@ public class TrainingController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAnyRole('ADMIN') and hasAuthority('WRITE_PRIVILEGE')")
     public ResponseEntity<TrainingDTO> saveTraining(@RequestBody TrainingDTO trainingDTO) {
         Category category = categoryService.getCategoryById(trainingDTO.getCategoryId());
         if (category == null) {
@@ -53,6 +57,7 @@ public class TrainingController {
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<TrainingDTO> updateTraining(@PathVariable Long id, @RequestBody TrainingDTO trainingDTO) {
         Category category = categoryService.getCategoryById(trainingDTO.getCategoryId());
         if (category == null) {
@@ -68,22 +73,26 @@ public class TrainingController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN') and hasAuthority('DELETE_PRIVILEGE')")
     public ResponseEntity<Void> deleteTraining(@PathVariable Long id) {
         trainingService.deleteTraining(id);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/activate/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Void> activateTraining(@PathVariable Long id) {
         trainingService.activateTraining(id);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/deactivate/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Void> deactivateTraining(@PathVariable Long id) {
         trainingService.deactivateTraining(id);
         return ResponseEntity.ok().build();
     }
+
 
     
 }
