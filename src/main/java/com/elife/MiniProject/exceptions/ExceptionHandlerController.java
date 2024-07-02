@@ -73,7 +73,7 @@ public class ExceptionHandlerController {
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
-  /* 
+  
     @ExceptionHandler(DuplicateUserException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -86,5 +86,5 @@ public class ExceptionHandlerController {
                 .path(request.getDescription(false))
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }*/  
+    } 
 }

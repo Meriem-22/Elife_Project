@@ -6,56 +6,82 @@ import com.elife.MiniProject.web.dto.ManagerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/managers")
 public class ManagerController {
 
+    private final ManagerService managerService;
+
     @Autowired
-    private ManagerService managerService;
+    public ManagerController(ManagerService managerService) {
+        this.managerService = managerService;
+    }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ManagerDTO> getManagerById(@PathVariable Long id) {
-        Manager manager = managerService.getManagerById(id);
+    @PostMapping("/register")
+    public ResponseEntity<Manager> registerManager(@RequestBody ManagerDTO managerDTO) {
+        try {
+            Manager manager = managerService.register(managerDTO);
+            return ResponseEntity.ok(manager);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+  
+
+    @GetMapping("/username/{username}")
+    public ResponseEntity<Manager> getManagerByUsername(@PathVariable String username) {
+        Manager manager = managerService.findByUsername(username);
         if (manager != null) {
-            return ResponseEntity.ok(ManagerDTO.convertToDTO(manager));
+            return ResponseEntity.ok(manager);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<ManagerDTO>> getAllManagers() {
-        List<ManagerDTO> managers = managerService.getAllManagers().stream()
-                .map(ManagerDTO::convertToDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(managers);
-    }
-
-    @PostMapping("/save")
-    public ResponseEntity<ManagerDTO> saveManager(@RequestBody ManagerDTO managerDTO) {
-        Manager manager = ManagerDTO.convertToEntity(managerDTO);
-        Manager savedManager = managerService.saveManager(manager);
-        return ResponseEntity.ok(ManagerDTO.convertToDTO(savedManager));
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<ManagerDTO> updateManager(@PathVariable Long id, @RequestBody ManagerDTO managerDTO) {
-        Manager manager = ManagerDTO.convertToEntity(managerDTO);
-        Manager updatedManager = managerService.updateManager(id, manager);
+    @PutMapping("/{id}")
+    public ResponseEntity<Manager> updateManager(@RequestBody ManagerDTO managerDTO, @PathVariable Long id) {
+        Manager updatedManager = managerService.update(managerDTO, id);
         if (updatedManager != null) {
-            return ResponseEntity.ok(ManagerDTO.convertToDTO(updatedManager));
+            return ResponseEntity.ok(updatedManager);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteManager(@PathVariable Long id) {
-        managerService.deleteManager(id);
+        managerService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/uploadPhoto")
+    public ResponseEntity<String> uploadManagerPhoto(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            String fileName = managerService.uploadPhoto(file, id);
+            return ResponseEntity.ok(fileName);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/updatePhoto")
+    public ResponseEntity<Void> updateManagerPhoto(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            managerService.updatePhoto(id, file);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Manager>> getAllManagers() {
+        List<Manager> managers = managerService.getAllManagers();
+        return ResponseEntity.ok(managers);
     }
 }

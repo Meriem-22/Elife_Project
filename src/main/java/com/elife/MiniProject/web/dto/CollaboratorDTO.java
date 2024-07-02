@@ -1,7 +1,11 @@
 package com.elife.MiniProject.web.dto;
 
+import org.hibernate.mapping.List;
+
 import com.elife.MiniProject.dao.entities.Collaborator;
 import lombok.*;
+
+
 
 @Getter
 @Setter
@@ -10,7 +14,8 @@ import lombok.*;
 @NoArgsConstructor
 public class CollaboratorDTO {
     private Long id;
-    private String username;
+    private String userName;
+    private String password; // Ajout du champ password
     private String firstName;
     private String lastName;
     private String email;
@@ -21,7 +26,7 @@ public class CollaboratorDTO {
     public static CollaboratorDTO convertToDTO(Collaborator collaborator) {
         return CollaboratorDTO.builder()
                 .id(collaborator.getId())
-                .username(collaborator.getUsername())
+                .userName(collaborator.getUsername())
                 .firstName(collaborator.getFirstName())
                 .lastName(collaborator.getLastName())
                 .email(collaborator.getEmail())
@@ -31,10 +36,13 @@ public class CollaboratorDTO {
                 .build();
     }
 
+    
+
     public static Collaborator convertToEntity(CollaboratorDTO collaboratorDTO) {
         Collaborator collaborator = new Collaborator();
         collaborator.setId(collaboratorDTO.getId());
-        collaborator.setUsername(collaboratorDTO.getUsername());
+        collaborator.setUserName(collaboratorDTO.getUserName());
+        collaborator.setPassword(collaboratorDTO.getPassword()); 
         collaborator.setFirstName(collaboratorDTO.getFirstName());
         collaborator.setLastName(collaboratorDTO.getLastName());
         collaborator.setEmail(collaboratorDTO.getEmail());
@@ -42,4 +50,6 @@ public class CollaboratorDTO {
         collaborator.setDepartment(collaboratorDTO.getDepartment());
         return collaborator;
     }
+
+ 
 }

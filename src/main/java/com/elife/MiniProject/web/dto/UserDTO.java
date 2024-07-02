@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 public class UserDTO {
     private Long id;
-    private String username;
     private String firstName;
     private String lastName;
     private String email;
@@ -20,7 +19,6 @@ public class UserDTO {
     public static UserDTO convertToDTO(User user) {
         return UserDTO.builder()
                 .id(user.getId())
-                .username(user.getUsername())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
@@ -32,7 +30,6 @@ public class UserDTO {
     public User convertToEntity() {
         User user = new User();
         user.setId(this.id);
-        user.setUsername(this.username);
         user.setFirstName(this.firstName);
         user.setLastName(this.lastName);
         user.setEmail(this.email);
