@@ -71,4 +71,9 @@ public class RequestServiceImpl implements RequestService {
         }
     }
 
+    @Override
+    public List<Request> findRequestsByCollaboratorId(Long collaboratorId) {
+        return requestRepository.findByCollaboratorId(collaboratorId);
+    }
+
 }

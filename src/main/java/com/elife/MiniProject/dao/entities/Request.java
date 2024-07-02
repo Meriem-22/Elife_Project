@@ -20,8 +20,8 @@ public class Request {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "collaborator_id", nullable = false)
+    private Collaborator collaborator;
 
     @ManyToOne
     @JoinColumn(name = "training_id", nullable = false)

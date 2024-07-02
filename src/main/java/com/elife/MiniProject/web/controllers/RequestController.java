@@ -1,7 +1,7 @@
 package com.elife.MiniProject.web.controllers;
 
 import com.elife.MiniProject.businiss.services.RequestService;
-import com.elife.MiniProject.businiss.services.UserService;
+import com.elife.MiniProject.businiss.services.CollaboratorService;
 import com.elife.MiniProject.businiss.services.TrainingService;
 import com.elife.MiniProject.dao.entities.Request;
 import com.elife.MiniProject.web.dto.RequestDTO;
@@ -21,7 +21,7 @@ public class RequestController {
     private RequestService requestService;
 
     @Autowired
-    private UserService userService;
+    private CollaboratorService collaboratorService;
 
     @Autowired
     private TrainingService trainingService;
@@ -38,7 +38,7 @@ public class RequestController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')and hasAuthority('READ_PRIVILEGE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER') and hasAuthority('READ_PRIVILEGE')")
     public ResponseEntity<List<RequestDTO>> getAllRequests() {
         List<RequestDTO> requests = requestService.getAllRequests().stream()
                 .map(RequestDTO::convertToDTO)
@@ -47,17 +47,17 @@ public class RequestController {
     }
 
     @PostMapping("/save")
-    @PreAuthorize("hasAnyRole('COLLABORATOR')and hasAuthority('WRITE_PRIVILEGE')")
+    @PreAuthorize("hasRole('COLLABORATOR') and hasAuthority('WRITE_PRIVILEGE')")
     public ResponseEntity<RequestDTO> saveRequest(@RequestBody RequestDTO requestDTO) {
-        Request request = requestDTO.convertToEntity(userService, trainingService);
+        Request request = requestDTO.convertToEntity(collaboratorService, trainingService);
         Request savedRequest = requestService.saveRequest(request);
         return ResponseEntity.ok(RequestDTO.convertToDTO(savedRequest));
     }
 
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')and hasAuthority('UPDATE_PRIVILEGE')")
+    @PreAuthorize("hasRole('ADMIN') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<RequestDTO> updateRequest(@PathVariable Long id, @RequestBody RequestDTO requestDTO) {
-        Request request = requestDTO.convertToEntity(userService, trainingService);
+        Request request = requestDTO.convertToEntity(collaboratorService, trainingService);
         Request updatedRequest = requestService.updateRequest(id, request);
         if (updatedRequest != null) {
             return ResponseEntity.ok(RequestDTO.convertToDTO(updatedRequest));
@@ -67,24 +67,31 @@ public class RequestController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')and hasAuthority('DELETE_PRIVILEGE')")
+    @PreAuthorize("hasRole('ADMIN') and hasAuthority('DELETE_PRIVILEGE')")
     public ResponseEntity<Void> deleteRequest(@PathVariable Long id) {
         requestService.deleteRequest(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/accept/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')and hasAuthority('UPDATE_PRIVILEGE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Void> acceptRequest(@PathVariable Long id) {
         requestService.acceptRequest(id);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/refuse/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')and hasAuthority('UPDATE_PRIVILEGE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Void> refuseRequest(@PathVariable Long id) {
         requestService.refuseRequest(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/byCollaborator/{collaboratorId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'COLLABORATOR') and hasAuthority('READ_PRIVILEGE')")
+    public ResponseEntity<List<Request>> getRequestsByCollaboratorId(@PathVariable Long collaboratorId) {
+        List<Request> requests = requestService.findRequestsByCollaboratorId(collaboratorId);
+        return ResponseEntity.ok(requests);
     }
 }
 

@@ -41,24 +41,11 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String photo;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Request> requests;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
-    // Correct constructor
-    public User(Long id, String userName, String password, String firstName, String lastName, String email, String photo, Role role) {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.photo = photo;
-        this.role = role;
-    }
+    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

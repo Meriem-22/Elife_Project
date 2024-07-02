@@ -12,4 +12,5 @@ public interface RequestService {
     void deleteRequest(Long id);
     void acceptRequest(Long requestId);
     void refuseRequest(Long requestId);
+    List<Request> findRequestsByCollaboratorId(Long collaboratorId);
 }

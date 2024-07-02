@@ -136,10 +136,8 @@ public void updatePhoto(Long id, MultipartFile file) {
             throw new IllegalArgumentException("Collaborator not found with id: " + id);
         }
 
-        // Supprimer l'ancienne photo s'il en existe une
         deletePhoto(id);
 
-        // Vérifier le type MIME du fichier
         if (!file.getContentType().startsWith("image/")) {
             throw new IllegalArgumentException("File must be an image");
         }
