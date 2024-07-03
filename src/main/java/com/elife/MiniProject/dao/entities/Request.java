@@ -18,15 +18,6 @@ public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "collaborator_id", nullable = false)
-    private Collaborator collaborator;
-
-    @ManyToOne
-    @JoinColumn(name = "training_id", nullable = false)
-    private Training training;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RequestStatus status = RequestStatus.PENDING; 
@@ -39,4 +30,12 @@ public class Request {
 
     @Column(length = 1000)
     private String comments;
+
+    @ManyToOne
+    @JoinColumn(name = "collaborator_id", nullable = false)
+    private Collaborator collaborator;
+
+    @ManyToOne
+    @JoinColumn(name = "training_id", nullable = false)
+    private Training training;
 }
