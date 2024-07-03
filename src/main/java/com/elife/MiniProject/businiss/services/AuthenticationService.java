@@ -9,6 +9,6 @@ import com.elife.MiniProject.web.dto.AuthenticationUserDTO;
 
 public interface AuthenticationService {
    
-    User register(User user) throws DuplicateUserException;
+   // User register(User user) throws DuplicateUserException;
    AuthenticationUserDTO login(Authentication authentication);
 }

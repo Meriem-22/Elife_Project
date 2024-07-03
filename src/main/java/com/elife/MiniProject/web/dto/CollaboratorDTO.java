@@ -1,7 +1,4 @@
 package com.elife.MiniProject.web.dto;
-
-import org.hibernate.mapping.List;
-
 import com.elife.MiniProject.dao.entities.Collaborator;
 import lombok.*;
 
@@ -15,7 +12,7 @@ import lombok.*;
 public class CollaboratorDTO {
     private Long id;
     private String userName;
-    private String password; // Ajout du champ password
+    private String password; 
     private String firstName;
     private String lastName;
     private String email;

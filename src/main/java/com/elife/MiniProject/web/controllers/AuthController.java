@@ -50,7 +50,7 @@ public class AuthController {
                 .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                 .body(authenticationUserDTO);
     }
-
+/* 
     // Endpoint for user registration (sign-up)
     @PostMapping("/signup")
     public ResponseEntity<RegisterUserDTO> register(@Valid @RequestBody RegisterUserDTO registerUserDTO) throws DuplicateUserException {
@@ -60,7 +60,7 @@ public class AuthController {
         return ResponseEntity.ok()
                 .body(RegisterUserDTO.toRegisterUserDTO(user));
     }
-
+*/
     // Endpoint for user logout (sign-out)
     @PostMapping("/signout")
     public ResponseEntity<Void> logout(HttpServletRequest request) {
