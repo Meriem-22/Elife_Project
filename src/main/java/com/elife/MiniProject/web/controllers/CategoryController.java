@@ -39,7 +39,7 @@ public class CategoryController {
     }
 
     @PostMapping("/save")
-    @PreAuthorize("hasAnyRole('ADMIN')and hasAuthority('WRITE_PRIVILEGE')")
+    @PreAuthorize("hasAnyRole('ADMIN') and hasAuthority('WRITE_PRIVILEGE')")
 
     public ResponseEntity<CategoryDTO> saveCategory(@RequestBody CategoryDTO categoryDTO) {
         Category category = categoryDTO.convertToEntity();

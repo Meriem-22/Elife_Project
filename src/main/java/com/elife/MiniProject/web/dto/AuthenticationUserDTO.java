@@ -6,7 +6,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.elife.MiniProject.dao.entities.User;
 
-
 public record AuthenticationUserDTO(
         Long id,
         String email,

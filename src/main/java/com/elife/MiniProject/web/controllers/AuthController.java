@@ -1,5 +1,4 @@
 package com.elife.MiniProject.web.controllers;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.elife.MiniProject.exceptions.DuplicateUserException;
 import com.elife.MiniProject.businiss.services.AuthenticationService;
 import com.elife.MiniProject.businiss.services.JwtService;
 import com.elife.MiniProject.dao.entities.User;
-import com.elife.MiniProject.exceptions.DuplicateUserException;
 import com.elife.MiniProject.web.dto.AuthenticationUserDTO;
 import com.elife.MiniProject.web.dto.RegisterUserDTO;
 
@@ -72,5 +71,6 @@ public class AuthController {
                 .build();
     }
 }
+
 
 
