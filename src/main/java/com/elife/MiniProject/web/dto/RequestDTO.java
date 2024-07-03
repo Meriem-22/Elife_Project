@@ -2,7 +2,7 @@ package com.elife.MiniProject.web.dto;
 
 import com.elife.MiniProject.dao.entities.Request;
 import com.elife.MiniProject.dao.enums.RequestStatus;
-import com.elife.MiniProject.businiss.services.CollaboratorService;
+import com.elife.MiniProject.businiss.services.UserService;
 import com.elife.MiniProject.businiss.services.TrainingService;
 import lombok.*;
 
@@ -35,10 +35,10 @@ public class RequestDTO {
                 .build();
     }
 
-    public Request convertToEntity(CollaboratorService collaboratorService, TrainingService trainingService) {
+    public Request convertToEntity(UserService userService, TrainingService trainingService) {
         Request request = new Request();
         request.setId(this.id);
-        request.setCollaborator(collaboratorService.findById(this.collaboratorId)); 
+        request.setCollaborator(userService.getUserById(this.collaboratorId)); 
         request.setTraining(trainingService.getTrainingById(this.trainingId));
         request.setStatus(this.status);
         request.setSubmissionDate(this.submissionDate);

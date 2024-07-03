@@ -10,17 +10,18 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+
 public record RegisterUserDTO(
-        @NotBlank(message = "firstname is required") String firstName,
-        @NotBlank(message = "lastname is required") String lastName,
+        @NotBlank(message = "firstname is required") String firstname,
+        @NotBlank(message = "lastname is required") String lastname,
         @NotBlank(message = "email is required") @Email(message = "email format is not valid") String email,
         @NotBlank(message = "password is required")  @Size(min = 6, message = "Password must be at most 6 characters long") String password,
         @NotNull Role role) {
   
             public static User fromRegisterUserDTO(RegisterUserDTO registerUserDTO, PasswordEncoder passwordEncoder) {
         User user = User.builder()
-                .firstName(registerUserDTO.firstName())
-                .lastName(registerUserDTO.lastName())
+                .firstname(registerUserDTO.firstname())
+                .lastname(registerUserDTO.lastname())
                 .email(registerUserDTO.email())
                 .password(passwordEncoder.encode(registerUserDTO.password()))
                 .role(registerUserDTO.role())
@@ -29,8 +30,8 @@ public record RegisterUserDTO(
     }
 
     public static RegisterUserDTO toRegisterUserDTO(User user) {
-        return new RegisterUserDTO(user.getFirstName(),
-                user.getLastName(),
+        return new RegisterUserDTO(user.getFirstname(),
+                user.getLastname(),
                 user.getEmail(),
                 user.getPassword(),
                 user.getRole());

@@ -19,8 +19,8 @@ public class UserDTO {
     public static UserDTO convertToDTO(User user) {
         return UserDTO.builder()
                 .id(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
+                .firstName(user.getFirstname())
+                .lastName(user.getLastname())
                 .email(user.getEmail())
                 .photo(user.getPhoto())
                 .role(user.getRole().name())
@@ -30,8 +30,8 @@ public class UserDTO {
     public User convertToEntity() {
         User user = new User();
         user.setId(this.id);
-        user.setFirstName(this.firstName);
-        user.setLastName(this.lastName);
+        user.setFirstname(this.firstName);
+        user.setLastname(this.lastName);
         user.setEmail(this.email);
         user.setPhoto(this.photo);
 

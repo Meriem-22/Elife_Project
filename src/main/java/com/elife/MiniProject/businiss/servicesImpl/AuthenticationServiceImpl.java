@@ -18,7 +18,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AuthenticationServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-/* 
+
     @Override
     public User register(User user) throws DuplicateUserException {
         if (user == null) {
@@ -31,7 +31,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             // Handle uniqueness constraint violations
             throw new DuplicateUserException("User already exists");
         }
-    } */
+    } 
 
     @Override
     public AuthenticationUserDTO login(Authentication authentication) {

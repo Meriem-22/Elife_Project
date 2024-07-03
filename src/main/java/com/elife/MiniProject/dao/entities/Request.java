@@ -33,7 +33,7 @@ public class Request {
 
     @ManyToOne
     @JoinColumn(name = "collaborator_id", nullable = false)
-    private Collaborator collaborator;
+    private User collaborator;
 
     @ManyToOne
     @JoinColumn(name = "training_id", nullable = false)
