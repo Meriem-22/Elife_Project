@@ -23,7 +23,6 @@ public class ManagerController {
     }
 
     @PostMapping("/register")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')and hasAuthority('WRITE_PRIVILEGE')")
     public ResponseEntity<Manager> registerManager(@RequestBody ManagerDTO managerDTO) {
         try {
             Manager manager = managerService.register(managerDTO);

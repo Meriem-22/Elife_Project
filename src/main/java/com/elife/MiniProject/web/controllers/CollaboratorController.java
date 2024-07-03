@@ -39,8 +39,6 @@ public class CollaboratorController {
     }
 
     @PostMapping("/register")
-    @PreAuthorize("hasAnyRole('COLLABORATOR') and hasAuthority('WRITE_PRIVILEGE')")
-
     public ResponseEntity<CollaboratorDTO> registerCollaborator(@RequestBody CollaboratorDTO collaboratorDTO) throws DuplicateUserException {
     Collaborator newCollaborator = collaboratorService.register(collaboratorDTO);
     CollaboratorDTO newCollaboratorDTO = CollaboratorDTO.convertToDTO(newCollaborator);
